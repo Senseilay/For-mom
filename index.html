@@ -1,0 +1,546 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>For Mom 🍦💖</title>
+  <style>
+    :root {
+      font-family: Arial, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: linear-gradient(180deg, #ffd6e7, #fff4d6);
+      display: grid;
+      place-items: center;
+      color: #5b3144;
+    }
+
+    .card {
+      width: min(1000px, 94vw);
+      background: rgba(255,255,255,0.72);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.7);
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: 0 18px 50px rgba(0,0,0,0.15);
+      overflow: hidden;
+    }
+
+    .screen {
+      display: none;
+    }
+
+    .screen.active {
+      display: block;
+    }
+
+    h1, h2 {
+      margin-top: 0;
+      text-align: center;
+    }
+
+    p {
+      line-height: 1.6;
+      text-align: center;
+    }
+
+    .center {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      border: none;
+      border-radius: 14px;
+      padding: 12px 18px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      background: #ff8db3;
+      color: white;
+      box-shadow: 0 8px 20px rgba(255,141,179,0.35);
+    }
+
+    button.secondary {
+      background: #ffc95c;
+      color: #6a4a00;
+      box-shadow: 0 8px 20px rgba(255,201,92,0.35);
+    }
+
+    .hud {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin: 16px 0;
+    }
+
+    .pill {
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.75);
+      border: 1px solid rgba(255,255,255,0.8);
+      font-weight: bold;
+    }
+
+    .gameArea {
+      margin-top: 14px;
+      height: 340px;
+      border-radius: 22px;
+      background: linear-gradient(180deg, #fff8fb, #fff2cc);
+      border: 2px dashed #ffb3cc;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .icecream {
+      position: absolute;
+      width: 84px;
+      height: 84px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 40px;
+      transform: translate(-50%, -50%);
+      background: white;
+      box-shadow: 0 10px 22px rgba(0,0,0,0.12);
+      cursor: pointer;
+      transition: transform 0.15s ease;
+    }
+
+    .icecream:hover {
+      transform: translate(-50%, -50%) scale(1.08);
+    }
+
+    .messageBox {
+      margin-top: 18px;
+      min-height: 90px;
+      padding: 18px 22px;
+      border-radius: 22px;
+      background: linear-gradient(135deg, #fff0f6, #ffffff);
+      border: 2px solid #ffc1d6;
+      text-align: center;
+      font-size: 22px;
+      font-weight: 700;
+      color: #a0446a;
+      box-shadow: 0 12px 28px rgba(255, 141, 179, 0.28);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: floatPop 0.35s ease;
+    }
+
+    @keyframes floatPop {
+      0% {
+        opacity: 0;
+        transform: translateY(12px) scale(0.96);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .prizeLayout {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 24px;
+      align-items: start;
+      margin-top: 20px;
+    }
+
+    .slideshowWrap {
+      display: grid;
+      place-items: center;
+    }
+
+    .slideFrame {
+      width: min(420px, 90vw);
+      aspect-ratio: 1 / 1;
+      border-radius: 22px;
+      overflow: hidden;
+      background: #fff;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.16);
+      position: relative;
+      margin: 0 auto;
+    }
+
+    .slideFrame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+
+    .caption {
+      margin-top: 14px;
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold;
+      color: #8b4665;
+    }
+
+    .lyricsPanel {
+      background: rgba(255,255,255,0.85);
+      border: 2px solid #ffc1d6;
+      border-radius: 22px;
+      padding: 18px;
+      box-shadow: 0 12px 28px rgba(255, 141, 179, 0.20);
+    }
+
+    .lyricsTitle {
+      font-size: 18px;
+      font-weight: 700;
+      color: #a0446a;
+      margin-bottom: 12px;
+      text-align: center;
+    }
+
+    .lyricsBox {
+      min-height: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-size: 24px;
+      line-height: 1.7;
+      font-weight: 700;
+      color: #8b4665;
+      padding: 18px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #fff0f6, #ffffff);
+      box-shadow: inset 0 0 0 1px rgba(255,193,214,0.45);
+      transition: all 0.25s ease;
+    }
+
+    .finalMessage {
+      margin-top: 22px;
+      padding: 16px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.82);
+      text-align: center;
+      font-size: 18px;
+      line-height: 1.7;
+    }
+
+    .small {
+      font-size: 13px;
+      opacity: 0.8;
+      margin-top: 10px;
+    }
+
+    @media (max-width: 900px) {
+      .prizeLayout {
+        grid-template-columns: 1fr;
+      }
+
+      .lyricsBox {
+        font-size: 21px;
+        min-height: 140px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <!-- INTRO -->
+    <section id="intro" class="screen active">
+      <h1>For My Mom 🍦💖</h1>
+      <p>
+        Hi Mom, I made a little sweet surprise just for you.
+        Before your special gift appears, catch the ice creams first.
+      </p>
+      <div class="center">
+        <button id="startBtn">Start the Surprise</button>
+      </div>
+      <div class="center" style="margin-top:12px;">
+  <button id="skipToSongBtn" class="secondary">Skip to Song (Test)</button>
+</div>
+      <p class="small">Tip: audio starts after clicking because browsers require interaction first.</p>
+    </section>
+
+    <!-- GAME -->
+    <section id="game" class="screen">
+      <h2>Catch the Ice Cream 🍦</h2>
+      <p>The ice cream man is teasing you. Catch 6 ice creams to unlock the surprise.</p>
+
+      <div class="hud">
+        <div class="pill">Caught: <span id="score">0</span>/6</div>
+      </div>
+
+      <div id="gameArea" class="gameArea"></div>
+
+      <div id="messageBox" class="messageBox">
+        Click the ice cream to reveal sweet messages for Mom 💕
+      </div>
+    </section>
+
+    <!-- PRIZE -->
+    <section id="prize" class="screen">
+      <h2>Surprise for You, Mom 🎁</h2>
+      <p>This Project and this song are for you. We love you so much. 💖</p>
+
+      <div class="prizeLayout">
+        <div class="slideshowWrap">
+          <div class="slideFrame">
+            <img id="slideImage" src="pic1.jpeg" alt="Memory photo for Mom" />
+          </div>
+          <div id="caption" class="caption">A beautiful you 💕</div>
+        </div>
+
+        <div class="lyricsPanel">
+          <div class="lyricsTitle">Now Playing 🎶</div>
+          <div id="lyricsBox" class="lyricsBox">The lyrics will appear here... 💖</div>
+        </div>
+      </div>
+
+      <div class="finalMessage">
+        Thank you for your love, your patience, your sacrifices, and everything you do.
+        You are one of the best gifts in my life, Mom. 🍦💗🎶
+      </div>
+
+      <div class="center" style="margin-top:18px;">
+        <button id="replayBtn" class="secondary">Play Again</button>
+      </div>
+    </section>
+  </div>
+
+  <audio id="bgMusic" preload="auto">
+    <source src="song.mp3" type="audio/mpeg">
+    Your browser does not support audio.
+  </audio>
+
+  <audio id="clickSound" preload="auto">
+    <source src="click.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    const screens = {
+      intro: document.getElementById("intro"),
+      game: document.getElementById("game"),
+      prize: document.getElementById("prize")
+    };
+
+    function showScreen(name) {
+      Object.values(screens).forEach(screen => screen.classList.remove("active"));
+      screens[name].classList.add("active");
+    }
+
+    const startBtn = document.getElementById("startBtn");
+    const replayBtn = document.getElementById("replayBtn");
+    const gameArea = document.getElementById("gameArea");
+    const scoreEl = document.getElementById("score");
+    const messageBox = document.getElementById("messageBox");
+    const bgMusic = document.getElementById("bgMusic");
+    const slideImage = document.getElementById("slideImage");
+    const caption = document.getElementById("caption");
+    const lyricsBox = document.getElementById("lyricsBox");
+    const skipToSongBtn = document.getElementById("skipToSongBtn");
+
+    const sweetMessages = [
+      "Mom, your love makes everything Easier. 🍦",
+      "Thank you for always taking care of us. 💖",
+      "You make hard days feel lighter. ☀️",
+      "Your hugs are our safest place. 🤍",
+      "We appreciate every sacrifice you made for us. 🌷",
+      "We love you so much, Mom. 🎁"
+    ];
+
+    const photoSlides = [
+      { src: "pic1.jpeg", caption: "A beautiful you 💕" },
+      { src: "pic2.jpeg", caption: "Your smile makes everything warm ☀️" },
+      { src: "pic3.jpeg", caption: "Thank you for every little thing 🌷" },
+      { src: "pic4.jpeg", caption: "You are our comfort and strength 💗" },
+      { src: "pic5.jpg", caption: "We love you always, Mom 🎶" }
+    ];
+
+    const lyrics = [
+      { time: 11, text: "She held the cracks when the walls would break<br>Kept us warm through the storms we'd face" },
+      { time: 19, text: "Her hands built dreams from the smallest spark<br>Lit the way when the nights got dark" },
+      { time: 26, text: "Her words were threads that wove my soul<br>Taught me to stand when the world felt cold" },
+      { time: 33, text: "She gave her days and her dreams for mine<br>A love so fierce, it defies all time" },
+
+      { time: 42, text: "Thank you Mom for all you've done<br>For every fight you quietly won" },
+      { time: 55, text: "For holding on when I let go<br>You're the heart, the light, the home I know" },
+
+      { time: 80, text: "Every tear, every silent prayer<br>You stood for me when no one cared" },
+      { time: 87, text: "The weight you carried, the strength you gave<br>Built a life from the love you made" },
+
+      { time: 94, text: "No matter how far the road may bend<br>Her love's a circle, it never ends" },
+      { time: 101, text: "She taught me grace, she taught me fight<br>She's the reason I see the light" },
+
+      { time: 111, text: "Thank you Mom for all you've done<br>For every fight you quietly won" },
+      { time: 123, text: "For holding on when I let go<br>You're the heart, the light, the home I know" },
+
+      { time: 136, text: "Oh-ooh oh-ooh" },
+
+      { time: 161, text: "Thank you Mom for all you've done<br>For every fight you quietly won" },
+      { time: 173, text: "For holding on when I let go<br>You're the heart, the light, ooh" },
+      { time: 180, text: "You're the heart, the light..." },
+      { time: 188, text: "ohh..." },
+       { time: 200, text: "You're the heart, the light, the home I know"},
+        { time: 208, text: "...."}
+    ];
+
+    const GOAL = 6;
+    let score = 0;
+    let icecreamEl = null;
+    let slideIndex = 0;
+    let slideTimer = null;
+
+    function rand(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    function moveIceCream() {
+      const rect = gameArea.getBoundingClientRect();
+      const x = rand(60, rect.width - 60);
+      const y = rand(60, rect.height - 60);
+
+      icecreamEl.style.left = x + "px";
+      icecreamEl.style.top = y + "px";
+    }
+
+    function placeIceCream() {
+      if (!icecreamEl) {
+        icecreamEl = document.createElement("div");
+        icecreamEl.className = "icecream";
+        icecreamEl.textContent = "🍦";
+        gameArea.appendChild(icecreamEl);
+
+        icecreamEl.addEventListener("click", () => {
+          const sound = new Audio("click.mp3");
+          sound.volume = 0.7;
+          sound.play().catch(err => console.log("Click sound failed:", err));
+
+          score++;
+          scoreEl.textContent = score;
+
+          const msgIndex = Math.min(score - 1, sweetMessages.length - 1);
+          messageBox.textContent = sweetMessages[msgIndex];
+          messageBox.style.animation = "none";
+          void messageBox.offsetWidth;
+          messageBox.style.animation = "floatPop 0.35s ease";
+
+          if (score >= GOAL) {
+            icecreamEl.style.pointerEvents = "none";
+            icecreamEl.textContent = "💖";
+            unlockPrize();
+            return;
+          }
+
+          moveIceCream();
+        });
+      }
+
+      moveIceCream();
+    }
+
+    function resetGame() {
+      score = 0;
+      scoreEl.textContent = "0";
+      messageBox.textContent = "Click the ice cream to reveal sweet messages for Mom 💕";
+      messageBox.style.animation = "none";
+      void messageBox.offsetWidth;
+      messageBox.style.animation = "floatPop 0.35s ease";
+
+      if (icecreamEl) {
+        icecreamEl.remove();
+        icecreamEl = null;
+      }
+
+      placeIceCream();
+    }
+
+    function updateSlide() {
+      slideImage.src = photoSlides[slideIndex].src;
+      caption.textContent = photoSlides[slideIndex].caption;
+    }
+
+    function startSlideshow() {
+      slideIndex = 0;
+      updateSlide();
+
+      if (slideTimer) {
+        clearInterval(slideTimer);
+      }
+
+      slideTimer = setInterval(() => {
+        slideIndex = (slideIndex + 1) % photoSlides.length;
+        updateSlide();
+      }, 2500);
+    }
+
+    function syncLyrics() {
+      const current = bgMusic.currentTime;
+
+      for (let i = lyrics.length - 1; i >= 0; i--) {
+        if (current >= lyrics[i].time) {
+          if (lyricsBox.innerHTML !== lyrics[i].text) {
+            lyricsBox.innerHTML = lyrics[i].text;
+          }
+          break;
+        }
+      }
+
+      if (current < lyrics[0].time) {
+        lyricsBox.innerHTML = "The lyrics will appear here... 💖";
+      }
+    }
+
+    function unlockPrize() {
+      showScreen("prize");
+      lyricsBox.innerHTML = "The lyrics will appear here... 💖";
+
+      bgMusic.currentTime = 0;
+      bgMusic.play().catch(() => {
+        console.log("Audio autoplay was blocked until user interacts again.");
+      });
+
+      startSlideshow();
+    }
+
+    startBtn.addEventListener("click", () => {
+      showScreen("game");
+      resetGame();
+      bgMusic.load();
+    });
+
+    skipToSongBtn.addEventListener("click", () => {
+  unlockPrize();
+});
+
+    replayBtn.addEventListener("click", () => {
+      bgMusic.pause();
+      bgMusic.currentTime = 0;
+
+      if (slideTimer) {
+        clearInterval(slideTimer);
+        slideTimer = null;
+      }
+
+      lyricsBox.innerHTML = "The lyrics will appear here... 💖";
+      showScreen("intro");
+    });
+
+    bgMusic.addEventListener("timeupdate", syncLyrics);
+
+    window.addEventListener("resize", () => {
+      if (screens.game.classList.contains("active") && icecreamEl && score < GOAL) {
+        moveIceCream();
+      }
+    });
+  </script>
+</body>
+</html>
