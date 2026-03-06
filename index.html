@@ -264,8 +264,7 @@
       <div class="center">
         <button id="startBtn">Start the Surprise</button>
       </div>
-      <div class="center" style="margin-top:12px;">
-  <button id="skipToSongBtn" class="secondary">Skip to Song (Test)</button>
+      
 </div>
       <p class="small">Tip: audio starts after clicking because browsers require interaction first.</p>
     </section>
@@ -346,7 +345,7 @@
     const slideImage = document.getElementById("slideImage");
     const caption = document.getElementById("caption");
     const lyricsBox = document.getElementById("lyricsBox");
-    const skipToSongBtn = document.getElementById("skipToSongBtn");
+ 
 
     const sweetMessages = [
       "Mom, your love makes everything Easier. 🍦",
@@ -517,9 +516,7 @@
       bgMusic.load();
     });
 
-    skipToSongBtn.addEventListener("click", () => {
-  unlockPrize();
-});
+
 
     replayBtn.addEventListener("click", () => {
       bgMusic.pause();
@@ -543,4 +540,5 @@
     });
   </script>
 </body>
+
 </html>
